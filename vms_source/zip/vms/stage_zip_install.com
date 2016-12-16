@@ -64,7 +64,7 @@ $   create/dir new_gnu:[usr.bin]/prot=o:rwed
 $   create/dir new_gnu:[usr.sbin]/prot=o:rwed
 $   create/dir new_gnu:[vms_help]/prot=o:rwed
 $   create/dir new_gnu:[usr.share.doc.'product_name']/prot=o:rwed
-$   create/dir new_gnu:[usr.share.doc.'product_name'.man1]/prot=o:rwed
+$   create/dir new_gnu:[usr.share.doc.man.man1]/prot=o:rwed
 $ endif
 $!
 $ if mode .eqs. "install"
