@@ -71,6 +71,7 @@
 [gnv.vms_help]zip_cli.hlp
 [gnv.vms_bin]gnv$zip_msg.exe
 [gnv.vms_bin]gnv$zip_cli.exe
+[gnv.vms_bin]zip_verb.cld
 [gnv.vms_bin]remove_old_zip.com
 [gnv.vms_bin]zip_alias_setup.com
 [gnv.usr.share.doc.zip]WHATSNEW.

@@ -173,7 +173,11 @@ $       if mode .eqs. "install"
 $       then
 $           if f$search(source) .eqs. ""
 $           then
-$               source = "sys$disk:[''bin_dir']''prefix'''ttname'''ttype'"
+$               source = "sys$disk:[]''tname'''ttype'"
+$           endif
+$           if f$search(source) .eqs. ""
+$           then
+$               source = "sys$disk:[''bin_dir']''prefix'''tname'''ttype'"
 $           endif
 $           if f$search(dest) .eqs. "" then copy 'source' 'dest'
 $       else

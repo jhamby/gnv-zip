@@ -89,7 +89,7 @@ On VAX, the filenames will be as seen on the VAX system, typically with non
 ODS-2 characters and case changes prefixed with $ characters.
 
 [gnv.common_src]zip_*_original_src.bck is the original source of the
-zip kit as provided by the GNV project.
+zip kit as provided by the INFO-ZIP ZIP project.
 [gnv.vms_src]zip-*_vms_src.bck, if present, has the changed files that
 are used for building that are not yet in the zip source kits
 distributed by the GNU zip project.

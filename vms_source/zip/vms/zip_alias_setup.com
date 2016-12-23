@@ -1,4 +1,4 @@
-$! File: template_alias_setup.com
+$! File: zip_alias_setup.com
 $!
 $! The PCSI procedure needs a helper script to set up and remove aliases.
 $!

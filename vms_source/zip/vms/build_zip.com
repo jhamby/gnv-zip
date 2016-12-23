@@ -700,12 +700,12 @@ $             if f$search( "LIB_BZIP2:''bz2_olb'") .nes. ""
 $             then
 $                 lib_bzip2_opts = "LIB_BZIP2:''bz2_olb' /library,"
 $             else
-$                 gnv_libbz2 = "gnv$gnu:[usr.lib]libbz2_64.olb"
+$                 gnv_libbz2 = "gnv$gnu:[usr.lib]libbz2_32.olb"
 $                 if arch .eqs. "VAX"
 $                 then
 $                     gnv_libbz2 = "gnv$gnu:[usr.lib]libbz2_32.olb"
 $                 endif
-$                 if f$search(gnv_libbz2) .nes. ""
+$                 if f$search( gnv_libbz2) .nes. ""
 $                 then
 $                     lib_bzip2_opts = "''gnv_libbz2' /library,"
 $                 else

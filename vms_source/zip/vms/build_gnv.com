@@ -1,6 +1,6 @@
-$! File: build_vms.com
+$! File: build_gnv.com
 $!
-$! Procedure to build template_project on VMS.
+$! Procedure to build zip_project on VMS.
 $!
 $! Copyright 2016, John Malmberg
 $!
@@ -40,7 +40,7 @@ $ if (f$getsyi("HW_MODEL") .lt. 1024)
 $ then
 $   arch = "VAX"
 $   psize = "32"
-$   ccopts = "/NAMES=(AS_IS,TRUNC)/show=(expan,inclu)"
+$   ccopts = "CCOPTS=/NAMES=(AS_IS,TRUNC)/show=(expan,inclu)"
 $   ! New stuff for the beta
 $   do_lzma = ""
 $   if f$search("sys$disk:[...]$p$pmd8.c") .eqs. "" then do_ppmd = "NOPPMD"
@@ -50,8 +50,11 @@ $       do_lzma = "NOLZMA"
 $   endif
 $ else
 $   arch = f$edit(f$getsyi("ARCH_NAME"), "UPCASE")
-$   psize = "64"
-$   ccopts = "CCOPTS=/NAMES=(AS_IS,TRUNC)/POINTER_SIZE=64/show=(expan,inclu)"
+$!   psize = "64"
+$!   ccopts = "CCOPTS=/NAMES=(AS_IS,TRUNC)/POINTER_SIZE=64/show=(expan,inclu)"
+$!  zip build procedure does not support 64 bit pointers yet.
+$   psize = "32"
+$   ccopts = "CCOPTS=/NAMES=(AS_IS,TRUNC)/show=(expan,inclu)"
 $   local_zip="_USE_STD_STAT"
 $   ! New stuff for the beta
 $   if f$search("sys$disk:[]aes_wg.dir") .nes. ""
@@ -99,7 +102,7 @@ $!-----------------------------------
 $ if f$search("sys$disk:[...]*.exe") .eqs. ""
 $ then
 $   @[.vms]build_zip.com "IZ_BZIP2=gnv$gnu:[usr.include]" -
-     LIST 'do_lzma' 'do_ppmd' 'do_aes'
+     LIST 'ccopts' 'do_lzma' 'do_ppmd' 'do_aes'
 $!
 $   OLD_VERIFY = f$verify( 0)
 $   @[.vms]zip_verb.com
