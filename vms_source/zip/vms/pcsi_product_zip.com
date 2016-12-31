@@ -144,6 +144,7 @@ $ zip_name = f$edit(zip_name, "lowercase")
 $!
 $! Special startup file handling
 $ gnv_startup = "gnv$gnu:[vms_bin]gnv$''product_name'_startup.com"
+$ gnv_startup = f$edit(gnv_startup, "lowercase")
 $ if f$search(gnv_startup) .eqs. ""
 $ then
 $   copy [.vms]gnv_zip_startup.com 'gnv_startup'

@@ -1,6 +1,6 @@
 From file: zip_release_note_start.txt
 
-This is a packaging of Zip 3.0 from the info-zip project.
+This is a packaging of Zip 3.0 from the Info-ZIP project.
 
   http://www.info-zip.org
 
@@ -8,13 +8,10 @@ Note: This is a hobbyist effort and is not providing any support or any
 commitment to supply bug fixes or future releases.  This code is as-is
 with no warrantees.
 
-At this time, this is a pre-release document and does not actually reflect
-what will be in the eventual GNV ZIP release kit.
+Info-ZIP is already maintaining a VMS port, mainly for DCL mode.  The
+Info-ZIP.org is not maintaining the packaging at this time.
 
-Info-zip is already maintaining a VMS port, mainly for DCL mode.  The
-Info-zip.org is not maintaining the packaging.
-
-While we will feed back any changes made here to info-zip.org, we have no
+While we will feed back any changes made here to Info-ZIP.org, we have no
 control of what they will do with them.
 
 And they of course are not responsible for fixing any issues that may have
@@ -32,19 +29,6 @@ Special installation notes:
    GNV to be a set of kits that the GNV package will install.  During
    this transition some extra issues will need to be handled during
    installs and upgrades.
-
-*  Due to the way that PCSI identifies packages, if you install a package
-   from one producer and then want to upgrade it from another producer,
-   you will probably need to uninstall the previous package first.
-
-   Some of these packages were previously created with different producer
-   prefixes.  We are standardizing on VMSPORTS and GNV as the branding
-   prefixes.  GNV will be for packages that are part of the GNV product
-   suite, and VMSPORTS will be for most other packages.
-
-   This uninstall can cause warning messages about dependencies.  If you
-   are transitioning to an upwardly compatible package, you can ignore
-   those warnings.
 
 *  This package should be installed to the same volume as GNV is installed.
 
@@ -96,7 +80,7 @@ installation to collect files left over from incomplete deletions into the
 SYSLOST directory.  This step should be done on a "quiet" system per HP
 recomendations.
 
-The info-zip.org is maintaining a bug tracker for their code at
+The Info-ZIP.org is maintaining a bug tracker for their code at
 http://www.info-zip.org/zip-bug.html, but at this time are not maintaining
 the GNV variant of zip or unzip.
 
@@ -106,51 +90,23 @@ There is no guarantee that bugs will be fixed for a hobbyist build.
 
 VMS specific port information:
 
+The Info-ZIP VMS port uses "ZIP_OPTS" instead of "ZIP" for the environment
+variable for options.
+
+The Info-ZIP VMS port of zip and unzip have not been specifically set up
+for GNV at this time, so there may be some incompatibilities with GNV
+that may show up.
+
 The logical name GNV$GNU is used to find the simulated posix root and defines
 the logical name SYS$POSIX_ROOT in the process table in user mode for child
-processes if needed.  This is to comply with VMS logical name conventions.
-The logical name BIN is also set in the process table in user mode to be
-GNV$GNU:[BIN] if it is not already set.
+processes if needed.
 
-The following DECC$Feature settings may be in effect for Zip by default, that
-part of the version being packaged has not been updated at this time.
-
-DECC$ACL_ACCESS_CHECK enabled.
-DECC$ALLOW_REMOVE_OPEN_FILES enabled.
-DECC$ARGV_PARSE_STYLE enabled.
-DECC$EFS_CASE_PRESERVE enabled.
-DECC$EFS_CHARSET enabled.
-DECC$EFS_FILE_TIMESTAMPS enabled.
-DECC$ENABLE_GETENV_CACHE enabled.
-DECC$EXEC_FILEATTR_INHERITANCE set to 2.
-DECC$FILE_PERMISSION_UNIX enabled.
-DECC$FILE_SHARING enabled.
-DECC$FILE_OWNER_UNIX enabled.
-DECC$FILENAME_UNIX_NO_VERSION enabled.
-DECC$FILENAME_UNIX_ONLY enabled.
-DECC$GLOB_UNIX_STYLE enabled.
-DECC$POSIX_SEEK_STREAM_FILE enabled.
-DECC$READDIR_DROPDOTNOTYPE enabled.
-DECC$RENAME_NO_INHERIT enabled.
-DECC$STDIO_CTX_EOL enabled.
-DECC$STRTOL_ERANGE enabled.
-DECC$UNIX_PATH_BEFORE_LOGNAME enabled.
-
-While more strict UNIX compatibility feature settings can be applied by users
-by setting feature logical names, these settings are all the Bash and most
-ported programs need.
-
--Needs to be verified still---
 This port of Zip uses the VMS CRTL to handle the Unix format pathnames
 and as such is dependent on them.  It is a known issue that directories with
 a Unix name "file.dir/" and some symbolic links are not handled correctly.
 This is a combination of problems with RMS and CRTL.  The RMS portion is
 fixed with the VMS84?_RMS-V0300 ECO kit.  I am not aware of a CRTL kit that
 fixes the issues.
-
-Workarounds have been implemented for the cases that have been observed in
-for running configure scripts.  These are not complete work arounds, so there
-still may be corner cases that fail.
 
 This kit is designed to be used with the GNV Bash 4.2.45 or later kit or with
 DCL.
@@ -163,15 +119,17 @@ Fixes and enhancements in the GNV Zip 3.0.0 kit.
 
 * A zip_verb.cld file has been provided for installing the gnv$zip_cli.exe
   image from gnv$gnu:[vms_bin] as a DCL command.  Currently the help
-  for the zip_cli command only shows the traditional foreign command setup.
-  The zip_verb.cld is not currently working for the zip 3.1 beta code.
+  for the zip cli command only shows the traditional foreign command setup.
 
   $ set command gnv$gnu:[vms_bin]zip_verb
   $ show sym zip
   %DCL-W-UNDSYM, undefined symbol - check validity and spelling
-  LION> zip /help
+  $ zip /help
   Copyright (c) 1990-2008 Info-ZIP - Type 'zip "-L"' for software license.
   Zip 3.0 (July 5th 2008). Usage: (zip :== $ dev:[dir]zip_cli.exe)
+
+* This image is statically linked with the libbz2*.olb so that the bzip2
+  package does not need to be installed.
 
 
 OpenVMS specific building and kitting instructions are after the standard
@@ -180,6 +138,8 @@ bash readme file below.
 The source kits contains files for building Zip using DCL.
 
 Acknowledgements:
+
+This port is from the Info-ZIP project.
 
 This packaging was done by John Malmberg using information from the Bash 4.2.45
 port.

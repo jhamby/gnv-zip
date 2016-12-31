@@ -32,7 +32,6 @@ $!
 $!===========================================================================
 $!
 $ prefix = "gnv"
-$ bin_dir = ".vms"
 $ vms_src_dir = ".vms"
 $ product_name = "zip"
 $!
@@ -52,6 +51,7 @@ $   arch = arch_name
 $   lowercase_file = 1
 $ endif
 $ arch_code = f$extract(0, 1, arch_type)
+$ bin_dir = ".''arch'"
 $!
 $!  First create the directories
 $!--------------------------------
@@ -120,18 +120,20 @@ $!
 $!   if p1 starts with "R" then remove instead of install.
 $!
 $!   If 'prefix'$xxx.exe, then:
-$!       Source is [.'arch']xxx.exe
+$!       Source is ['bin_dir']xxx.exe
 $!       Destination1 is new_gnu:[bin]'prefix'$xxx.exe
 $!       Destination2 is new_gnu:[bin]xxx.  (alias)
 $!       Destination2 is new_gnu:[bin]xxx.exe  (alias)
 $!       We put all in new_gnu:[bin] instead of some in [usr.bin] because
 $!       older GNV kits incorrectly put some images in [bin] and [bin]
 $!       comes first in the search list.
-$   if f$locate("''prefix'$", tname) .eq. 0
+$   if (.not. f$locate("vms_bin]", tdir) .lt. tdir_len) .and. -
+       (f$locate("''prefix'$", tname) .eq. 0)
 $   then
 $       myfile_len = f$length(tname)
-$       myfile = f$extract(4, myfile_len, tname)
-$       source = "[.''arch']''myfile'''ttype'"
+$       prefix_len = f$length(prefix) + 1
+$       myfile = f$extract(prefix_len, myfile_len, tname)
+$       source = "[''bin_dir']''myfile'''ttype'"
 $       dest1 = "new_gnu:[bin]''tname'''ttype'"
 $       dest2 = "new_gnu:[bin]''myfile'."
 $       dest3 = "new_gnu:[bin]''myfile'.exe"
@@ -151,7 +153,7 @@ $!
 $   tnamex = "," + tname + ","
 $   if f$locate(tnamex, priv_script_list) .lt. priv_script_list_len
 $   then
-$       source = "['bin_dir']''tname'."
+$       source = "[''bin_dir']''tname'."
 $       dest = "new_gnu:[bin]''tname'."
 $       if mode .eqs. "install"
 $       then
@@ -167,6 +169,9 @@ $!       source is sys$disk:[]
 $!       dest is [vms_bin]
 $   if (f$locate("vms_bin]", tdir) .lt. tdir_len)
 $   then
+$       myfile_len = f$length(tname)
+$       prefix_len = f$length(prefix) + 1
+$       myfile = f$extract(prefix_len, myfile_len, tname)
 $       source = "sys$disk:[''bin_dir']''tname'''ttype'"
 $       dest = "new_gnu:[vms_bin]''tname'''ttype'"
 $       if mode .eqs. "install"
@@ -177,7 +182,11 @@ $               source = "sys$disk:[]''tname'''ttype'"
 $           endif
 $           if f$search(source) .eqs. ""
 $           then
-$               source = "sys$disk:[''bin_dir']''prefix'''tname'''ttype'"
+$               source = "sys$disk:[''bin_dir']''myfile'''ttype'"
+$           endif
+$           if f$search(source) .eqs. ""
+$           then
+$               source = "sys$disk:[''vms_src_dir']''tname'''ttype'"
 $           endif
 $           if f$search(dest) .eqs. "" then copy 'source' 'dest'
 $       else

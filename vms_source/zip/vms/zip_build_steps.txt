@@ -16,7 +16,8 @@ From File: zip_build_steps.txt
  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
  OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-Building ZIP on OpenVMS for use with GNV requires a current HP C compiler.
+Building ZIP on OpenVMS for use with GNV requires a current HP C compiler,
+and the GNV BZIP2 PCSI kit installed.
 
 The HP C 7.x compilers were used for building on Alpha and Itanium.
 
