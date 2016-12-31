@@ -87,7 +87,7 @@ $!
 $zip_cli_help_1:
 $ if f$search("new_gnu:[vms_bin]gnv$zip_cli.exe") .eqs. ""
 $ then
-$   @sys$disk:[.vms]jnunit_support skip test_zip zip_cli_1 vms
+$   @sys$disk:[.vms]junit_support skip test_zip zip_cli_1 vms
 $ else
 $   out_file = "zip_cli_help.tmp"
 $   spawn @sys$disk:[.vms]zip_cli_test.com/output='out_file'
