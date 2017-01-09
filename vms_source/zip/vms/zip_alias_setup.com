@@ -45,11 +45,11 @@ $! prefix = "[bin]"
 $! gosub aliases_list
 $!
 $ list = usr_bin
-$ prefix = "[usr.bin]"
+$ target_dir = "[usr.bin]"
 $ gosub aliases_list
 $!
 $! list = usr_sbin
-$! prefix = "[usr.sbin]"
+$! target_dir = "[usr.sbin]"
 $! gosub aliases_list
 $!
 $ exit
@@ -60,7 +60,7 @@ $alias_list_loop:
 $   name = f$element(i, ",", list)
 $   if name .eqs. "" then goto alias_list_loop_end
 $   if name .eqs. "," then goto alias_list_loop_end
-$   call do_alias "''name'" "''prefix'" "''name'"
+$   call do_alias "''name'" "''target_dir'" "''name'"
 $   i = i + 1
 $   goto alias_list_loop
 $alias_list_loop_end:
@@ -78,9 +78,9 @@ $ exit
 $ENDSUBROUTINE ! do_alias
 $!
 $!
-$! P1 is the filename, p2 is the directory prefix
+$! P1 is the filename, p2 is the target directory
 $add_alias: subroutine
-$ file = "gnv$gnu:''p2'gnv$''p1'.EXE"
+$ file = "gnv$gnu:''p2'''prefix'$''p1'.EXE"
 $ alias = "gnv$gnu:''p2'''p1'."
 $ if f$search(file) .nes. ""
 $ then
